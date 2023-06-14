@@ -1,5 +1,6 @@
 import { 
     ButtonBuy,
+    CartCounter,
     GroupNavbar,
     IconCart,
     IconMap,
@@ -9,9 +10,11 @@ import {
 } from "./styles";
 
 import Logo from '../../../../assets/Logo.svg'
+import { Link } from "react-router-dom";
 
 export function Navbar() {
-    return(
+
+    return (
         
             <NavbarContent>
                 <LogoImage src={Logo}/>
@@ -20,9 +23,12 @@ export function Navbar() {
                         <IconMap weight="fill" size={22}/> 
                         Fortaleza, CE
                     </LocationSpan>
-                    <ButtonBuy>
-                        <IconCart weight="fill" size={22}/>
-                    </ButtonBuy>
+                    <Link to={'/Checkout'}>
+                        <ButtonBuy>
+                            <IconCart weight="fill" size={22}/>
+                            <CartCounter>1</CartCounter>
+                        </ButtonBuy>
+                    </Link>
                 </GroupNavbar>
             </NavbarContent>
     )

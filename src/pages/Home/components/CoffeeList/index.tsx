@@ -1,3 +1,4 @@
+import { SelectedCoffesProps } from "../..";
 import {
     CoffeeCard,
     Container,
@@ -22,7 +23,8 @@ import {
     ContainerCoffeeCard,
 } from "./styles";
 
-interface CoffeesProps {
+export interface CoffeesProps {
+    id: number;
     images: string,
     tags: string[],
     name: string,
@@ -31,10 +33,13 @@ interface CoffeesProps {
 }
 
 interface CoffeeListProps {
-    coffees: CoffeesProps[]
+    coffees: CoffeesProps[],
+    handleAddCoffee: (coffee: CoffeesProps) => void;
+    handleRemoveCoffee: (coffee: CoffeesProps) => void;
+    selectCoffees: SelectedCoffesProps[];
 }
 
-export function CoffeeList({coffees}: CoffeeListProps) {
+export function CoffeeList({coffees, handleAddCoffee, selectCoffees, handleRemoveCoffee}: CoffeeListProps) {
     return (
         <Container>
             <Title>Nossos Cafés</Title>
@@ -68,11 +73,17 @@ export function CoffeeList({coffees}: CoffeeListProps) {
 
                                     <ContainerActions>
                                         <Counter>
-                                            <ButtonCounter>
+                                            <ButtonCounter onClick={() => handleAddCoffee(coffee)}>
                                                 <IconPlus size={14}/>
                                             </ButtonCounter>
-                                            <ButtonNumber>0</ButtonNumber>
-                                            <ButtonCounter>
+                                            <ButtonNumber>
+                                                {
+                                                    selectCoffees.find(item => item.id == coffee.id) ?
+                                                    selectCoffees[selectCoffees.findIndex(item => item.id == coffee.id)].quantity :
+                                                    0
+                                                }
+                                            </ButtonNumber>
+                                            <ButtonCounter  onClick={() => handleRemoveCoffee(coffee)}>
                                                 <IconMinus size={14}/>
                                             </ButtonCounter>
                                         </Counter>
