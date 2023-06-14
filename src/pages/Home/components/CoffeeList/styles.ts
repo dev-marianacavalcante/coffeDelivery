@@ -7,12 +7,15 @@ export const Container = styled.div`
     align-items: flex-start;
     flex-direction: column;
     margin-top: 10rem;
+    margin-bottom: 5rem;
 `;
 
 
 export const Title = styled.h2`
     font-weight: 800;
     font-size: 32px;
+
+    margin-bottom: 1em;
 `;
 
 export const List = styled.div`
@@ -23,13 +26,31 @@ export const List = styled.div`
     align-content: space-between;
     flex-direction: column;
 `;
+
 export const ContainerCoffeeCard = styled.div`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 30px;
+    margin: 0 auto;
+    gap: 1rem;
+    
     grid-row-gap: 40px;
+
+    @media (min-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1150px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1430px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (min-width: 1620px) {
+        grid-template-columns: repeat(5, 1fr);
+    }
 `;
+
 export const CoffeeCard = styled.div`
     width: 236px;
     height: 310px;

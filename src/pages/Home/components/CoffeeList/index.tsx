@@ -37,7 +37,7 @@ interface CoffeeListProps {
 export function CoffeeList({coffees}: CoffeeListProps) {
     return (
         <Container>
-            <Title>Nossos cafés</Title>
+            <Title>Nossos Cafés</Title>
             <ContainerCoffeeCard>
 
                 {
