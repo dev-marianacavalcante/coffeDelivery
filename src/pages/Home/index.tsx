@@ -155,13 +155,12 @@ export function Home() {
         const newSelectCoffees: SelectedCoffesProps[] = [];
         selectCoffees.forEach(item => {
             if (item.id == coffee.id) {
-                if (item.quantity < 1) {
-                    
+                if (item.quantity > 1) {
+                    newSelectCoffees.push({
+                        ...item,
+                        quantity: item.quantity - 1
+                    })
                 }
-                newSelectCoffees.push({
-                    ...item,
-                    quantity: item.quantity - 1
-                })
             } else {
                 newSelectCoffees.push(item);
             }
@@ -174,7 +173,12 @@ export function Home() {
     return (
         <>
           <Intro/>
-          <CoffeeList coffees={coffees} handleAddCoffee={handleAddCoffee} selectCoffees={selectCoffees} handleRemoveCoffee={handleRemoveCoffee}/>
+            <CoffeeList
+                coffees={coffees}
+                handleAddCoffee={handleAddCoffee}
+                selectCoffees={selectCoffees}
+                handleRemoveCoffee={handleRemoveCoffee}
+            />
         </>
     )
 }

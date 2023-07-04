@@ -1,34 +1,53 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
-    box-sizing: 0;
+    box-sizing: border-box;
+    outline: none;
   }
 
   body {
-    font: 16px 'Roboto', sans-serif;
-    background: ${props => props.theme.background};
-    padding: 0px 10rem;
+    background: ${({ theme }) => theme.colors["base-background"]};
+    color: ${({ theme }) => theme.colors["base-text"]};
+    -webkit-font-smoothing: antialiased;
+  }
 
-  }
-  :focus {
-    outline: 0;
-  }
   body, input, textarea, button {
-    font-family: 'Roboto', sans-serif;
+    font-family: ${({ theme }) => theme.fonts.regular};
     font-weight: 400;
-    font-size: 1rem;
+    font-size: ${({ theme }) => theme.textSizes["text-regular-m"]}
   }
 
-  .container {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 2.5rem 1rem;
-  }
-
-  button, .checkmark {
+  button {
     cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors["base-button"]}
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 2rem;
+    background: ${({ theme }) => theme.colors.purple}
   }
 `;
