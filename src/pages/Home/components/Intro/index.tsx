@@ -1,61 +1,58 @@
-import { 
-    ContentTitles, 
-    Subtitle, 
-    Title, 
-    Image, 
-    IconPackage, 
-    IconCart,
-    IconCoffee, 
-    IconTimer, 
-    ContentItems,
-    ContentImg,
-    Container,
-    ContentTitleImg,
-    ContainerItems,
-    ItemsLeft,
-    ItemsRigth 
+import {
+  BenefitsContainer,
+  IntroContainer,
+  IntroContent,
+  IntroTitle,
 } from "./styles";
-
-import image from '../../../../assets/Imagem.svg'
+import introImg from "../../../../assets/intro-img.png";
+import { ShoppingCart, Package, Timer, Coffee } from "phosphor-react";
+import { useTheme } from "styled-components";
+import { RegularText } from "../../../../components/Typography";
+import { InfoWithIcon } from "../../../../components/InfoWithIcon";
 
 export function Intro() {
-    return(
-        <Container>
-            <ContentTitleImg>
-                <ContentTitles>
-                    <Title>Encontre o café perfeito para qualquer hora do dia</Title>
-                    <Subtitle>Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora</Subtitle>
+  const { colors } = useTheme();
 
-                    <ContainerItems>
-                        <ContentItems>
-                            
-                            <ItemsLeft>
-                                <IconCart weight="fill"/>
-                                Compra simples e segura
-                            </ItemsLeft>
-                            <ItemsRigth>
-                                <IconPackage weight="fill"/>
-                                Embalagem mantém o café intacto
-                            </ItemsRigth>
-                        </ContentItems>
-                        <ContentItems>
-                            <ItemsLeft>
-                                <IconTimer weight="fill"/>
-                                Entrega rápida e rastreada
-                            </ItemsLeft>
-                            <ItemsRigth>
-                                <IconCoffee weight="fill"/>
-                                O café chega fresquinho até você
-                            </ItemsRigth>
-                        </ContentItems>
-                    </ContainerItems>
-                </ContentTitles>
+  return (
+    <IntroContainer>
+      <IntroContent className="container">
+        <div>
+          <section>
+            <IntroTitle size="xl">
+              Encontre o café perfeito para qualquer hora do dia
+            </IntroTitle>
+            <RegularText as="h3" size="l" color="subtitle">
+              Com o Coffee Delivery você recebe seu café onde estiver, a
+              qualquer hora
+            </RegularText>
+          </section>
 
-                <ContentImg>
-                    <Image src={image}/>
-                </ContentImg>
-            </ContentTitleImg>
-        </Container>
-                
-    )
+          <BenefitsContainer>
+            <InfoWithIcon
+              iconBg={colors["brand-yellow-dark"]}
+              icon={<ShoppingCart weight="fill" />}
+              text="Compra simples e segura"
+            />
+            <InfoWithIcon
+              iconBg={colors["base-text"]}
+              icon={<Package weight="fill" />}
+              text="Embalagem mantém o café intacto"
+            />
+            <InfoWithIcon
+              iconBg={colors["brand-yellow"]}
+              icon={<Timer weight="fill" />}
+              text="Entrega rápida e rastreada"
+            />
+            <InfoWithIcon
+              iconBg={colors["brand-purple"]}
+              icon={<Coffee weight="fill" />}
+              text="O café chega fresquinho até você"
+            />
+          </BenefitsContainer>
+        </div>
+
+        <img src={introImg} />
+      </IntroContent>
+    </IntroContainer>
+  );
 }

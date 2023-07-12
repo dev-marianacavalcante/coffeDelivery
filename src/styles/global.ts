@@ -48,6 +48,6 @@ export const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollbar-thumb {
     border-radius: 2rem;
-    background: ${({ theme }) => theme.colors.purple}
+    background: ${({ theme }) => theme.colors["brand-purple"]}
   }
 `;

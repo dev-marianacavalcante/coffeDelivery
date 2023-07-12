@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { Navbar } from "../../src/pages/Home/components/Navbar"
 import { LayoutContainer } from "./styles";
+import { Navbar } from "../../src/components/Navbar";
 
 export function DefaultLayout() {
-    return (
-        <LayoutContainer>
-            <Navbar/>
-            <Outlet/>
-        </LayoutContainer>
-    )
+  return (
+    <LayoutContainer>
+      <Navbar />
+      <Outlet />
+    </LayoutContainer>
+  );
 }

@@ -18,9 +18,9 @@ export const defaultTheme = {
     "brand-purple": "#8047F8",
     "brand-purple-light": "#EBE5F9",
 
-    "yellow-dark": "#C47F17",
+    "brand-yellow-dark": "#C47F17",
     "brand-yellow": "#DBAC2C",
-    "yellow-light": "#F1E9C9",
+    "brand-yellow-light": "#F1E9C9",
   },
   textSizes: {
     "title-title-xl": "3rem",
