@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { Coffee } from "../pages/Home/components/CoffeeCard";
 import { produce } from "immer";
 
@@ -16,14 +16,16 @@ interface CartContextType {
     type: "increase" | "decrease"
   ) => void;
   removeCartItem: (cartItemId: number) => void;
+  cleanCart: () => void;
 }
+
+export const CartContext = createContext({} as CartContextType);
+
 interface CartContextProviderProps {
   children: ReactNode;
 }
 
 const COFFEE_ITEMS_STORAGE_KEY = "coffeeDelivery:cartItems";
-
-export const CartContext = createContext({} as CartContextType);
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -42,7 +44,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   function addCoffeeToCart(coffee: CartItem) {
     const coffeeAlreadyExistsInCart = cartItems.findIndex(
-      (cartItem) => cartItem.id == coffee.id
+      (cartItem) => cartItem.id === coffee.id
     );
 
     const newCart = produce(cartItems, (draft) => {
@@ -56,11 +58,31 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCartItems(newCart);
   }
 
+  function changeCartItemQuantity(
+    cartItemId: number,
+    type: "increase" | "decrease"
+  ) {
+    const newCart = produce(cartItems, (draft) => {
+      const coffeeExistsInCart = cartItems.findIndex(
+        (cartItem) => cartItem.id === cartItemId
+      );
+
+      if (coffeeExistsInCart >= 0) {
+        const item = draft[coffeeExistsInCart];
+        draft[coffeeExistsInCart].quantity =
+          type === "increase" ? item.quantity + 1 : item.quantity - 1;
+      }
+    });
+
+    setCartItems(newCart);
+  }
+
   function removeCartItem(cartItemId: number) {
     const newCart = produce(cartItems, (draft) => {
       const coffeeExistsInCart = cartItems.findIndex(
-        (cartItem) => cartItem.id == cartItemId
+        (cartItem) => cartItem.id === cartItemId
       );
+
       if (coffeeExistsInCart >= 0) {
         draft.splice(coffeeExistsInCart, 1);
       }
@@ -69,23 +91,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCartItems(newCart);
   }
 
-  function changeCartItemQuantity(
-    cartItemId: number,
-    type: "increase" | "decrease"
-  ) {
-    const newCart = produce(cartItems, (draft) => {
-      const coffeeExistsInCart = cartItems.findIndex(
-        (cartItem) => cartItem.id == cartItemId
-      );
-
-      if (coffeeExistsInCart >= 0) {
-        const item = draft[coffeeExistsInCart];
-        draft[coffeeExistsInCart].quantity =
-          type == "increase" ? item.quantity + 1 : item.quantity - 1;
-      }
-    });
-
-    setCartItems(newCart);
+  function cleanCart() {
+    setCartItems([]);
   }
 
   useEffect(() => {
@@ -96,11 +103,12 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     <CartContext.Provider
       value={{
         cartItems,
-        cartQuantity,
-        cartItemsTotal,
         addCoffeeToCart,
+        cartQuantity,
         changeCartItemQuantity,
         removeCartItem,
+        cartItemsTotal,
+        cleanCart,
       }}>
       {children}
     </CartContext.Provider>

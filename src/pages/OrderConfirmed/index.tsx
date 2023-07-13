@@ -1,20 +1,39 @@
 import { RegularText, TitleText } from "../../components/Typography";
 import { OrderConfirmedContainer, OrderDetailsContainer } from "./styles";
-
-import Illustration from "../../assets/Illustration.svg";
+import confirmedOrderIllustration from "../../assets/Illustration.svg";
 import { InfoWithIcon } from "../../components/InfoWithIcon";
-import { CurrencyDollar, MapPin } from "phosphor-react";
 import { useTheme } from "styled-components";
+import { MapPin, Clock, CurrencyDollar } from "phosphor-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { paymentMethods } from "../completeOrder/Components/CompleteOrderForm/PaymentMethodOptions";
+import { OrderData } from "../completeOrder";
 
-export function OrderConfirmed() {
+interface LocationType {
+  state: OrderData;
+}
+
+export function OrderConfirmedPage() {
   const { colors } = useTheme();
 
+  const { state } = useLocation() as unknown as LocationType;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!state) {
+      navigate("/");
+    }
+  }, []);
+
+  if (!state) return <></>;
+
   return (
-    <OrderConfirmedContainer>
+    <OrderConfirmedContainer className="container">
       <div>
-        <TitleText size="l">Uhu! Pedido Confirmado</TitleText>
+        <TitleText size="l">Uhu! Pedido confirmado</TitleText>
         <RegularText size="l" color="subtitle">
-          Agora e so aguardar que logo o cafe chegara ate voce
+          Agora é só aguardar que logo o café chegará até você
         </RegularText>
       </div>
 
@@ -25,8 +44,21 @@ export function OrderConfirmed() {
             iconBg={colors["brand-purple"]}
             text={
               <RegularText>
-                Entrega em <strong></strong>,
+                Entrega em <strong>{state.street}</strong>, {state.number}
                 <br />
+                {state.district} - {state.city}, {state.uf}
+              </RegularText>
+            }
+          />
+
+          <InfoWithIcon
+            icon={<Clock weight="fill" />}
+            iconBg={colors["brand-yellow"]}
+            text={
+              <RegularText>
+                Previsão de entrega
+                <br />
+                <strong>20 min - 30 min</strong>
               </RegularText>
             }
           />
@@ -38,12 +70,12 @@ export function OrderConfirmed() {
               <RegularText>
                 Pagamento na entrega
                 <br />
-                <strong></strong>
+                <strong>{paymentMethods[state.paymentMethod].label}</strong>
               </RegularText>
             }
           />
         </OrderDetailsContainer>
-        <img src={Illustration} alt="" />
+        <img src={confirmedOrderIllustration} />
       </section>
     </OrderConfirmedContainer>
   );
